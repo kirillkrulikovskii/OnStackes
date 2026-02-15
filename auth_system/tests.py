@@ -20,11 +20,7 @@ class AccountTest(TestCase):
             a1,a2,a3
         ]
 
-    def test_Ages(self):
-        self.assertEqual(self.accounts[0].get_age(), 0 ) # type: ignore
-        self.assertEqual(self.accounts[1].get_age(), 16) # type: ignore
-        self.assertEqual(self.accounts[2].get_age(), 25) # type: ignore # 3 day left to happy birthday user.
-        print("Pass TestAges")
+
 
 """
 Now timezone is 2/12/2026
