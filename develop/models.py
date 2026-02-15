@@ -1,3 +1,15 @@
 from django.db import models
 
-# Create your models here.
+class Poll:
+    pass
+
+class Voting:
+    pass
+
+"""
+Plan Voting:
+
+
+Problems: they're multi-votes
+
+"""
