@@ -1,3 +1,35 @@
-<h1>Hello, World!</h1>
-<p>This page is post-list</p>
-{{posts}}
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+{% block head %}
+<style>
+    #posts-contain {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .post-item {
+        min-width: 350px;
+        min-height:200px;
+        max-width: 550px;
+        max-height:350px;
+    }
+
+</style>
+{% endblock %}
+{% block content %}
+<p>{{posts}}</p>
+<div id="posts-contain">
+    {% for post in posts %}
+        <div class="post-item">
+            <h1>{{post.title}}</h1>
+            <h3>{{post.author}}</h3>
+            <p>{{post.content}}</p>
+            <p>{{post.created_at}}</p>
+        </div>
+    {% empty %}
+        <p>We're Sorry! We have no found posts.</p>
+    {% endfor %}
+</div>
+{% endblock %}

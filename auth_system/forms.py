@@ -1,4 +1,5 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 from .models import Accounts
 
 class AccountsForm(forms.ModelForm):
@@ -30,8 +31,8 @@ class AccountsForm(forms.ModelForm):
                 raise forms.ValidationError("Invalid username and password.")
     
     def login(self):
-        username: str = self.cleaned_data.get('username')
-        password: str = self.cleaned_data.get('password')
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
         try:
             user = Accounts.objects.get(username=username)
             if user.check_password(password):

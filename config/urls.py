@@ -21,6 +21,7 @@ from blog import views as blog_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('execute/', blog_views.execute_post, name='execute_post'),
-    path('blog/', include('blog.urls', namespace='blog'))
+    #path('execute/', blog_views.execute_post, name='execute_post'),
+    path('blog/', include('blog.urls', namespace='blog')),
+    path('auth_system/', include('auth_system.urls', namespace='auth_system')),
 ]
