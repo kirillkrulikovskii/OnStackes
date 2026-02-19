@@ -6,6 +6,12 @@
     background: white;
     width: 100dvw;
     height: 3em;
-    box-shadow: 0 5px 15px;
-
+    box-shadow: 0 0px 15px rgba(0,0,0,0.2);
+    margin-bottom: 1em;
+    transition: box-shadow 0.3s ease;
 }
+
+#navbar.no-shadow {
+    box-shadow: none;
+}
+

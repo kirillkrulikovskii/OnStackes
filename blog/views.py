@@ -4,7 +4,17 @@ from django.http import HttpRequest
 from .forms import PostForm
 from .models import Post
 
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
+
+
+class HomeView(TemplateView):
+    template_name = "home.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data'] = "Hello, there!"
+        return context
+
+
 
 class PostListView(ListView):
     model = Post
