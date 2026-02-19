@@ -1,0 +1,11 @@
+#navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: white;
+    width: 100dvw;
+    height: 3em;
+    box-shadow: 0 5px 15px;
+
+}
