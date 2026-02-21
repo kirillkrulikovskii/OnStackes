@@ -22,14 +22,15 @@ class Post(models.Model):
     publish    = models.BooleanField (default=True)
     shares     = models.ManyToManyField(User,  related_name="post_shares", blank=True)
 
-    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, blank=True)    
+    category   = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, blank=True)    
     tags       = models.ManyToManyField('Tag', related_name="post_tags"  , blank=True)
 
     def __str__(self): return f"{self.title} by {self.author}"
+    def comments_count(self): self.comment_post.count() # type: ignore
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post   = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post   = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comment_post")
     content= models.TextField(max_length=512)
 
     created_at = models.DateTimeField(auto_now_add=True)

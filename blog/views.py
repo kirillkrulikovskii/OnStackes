@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from .forms import PostForm
 from .models import Post
 
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 
 
 class HomeView(TemplateView):
@@ -14,12 +14,39 @@ class HomeView(TemplateView):
         context['data'] = "Hello, there!"
         return context
 
-
-
 class PostListView(ListView):
     model = Post
     template_name = "post_list.html"
     context_object_name = 'posts'
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = "blog/detail_post.html"
+    context_object_name = "post"
+
+def fetch_comments(request, pk):
+    """
+    Fetch to Comments with Javascript
+    data = fetch({% url 'fetch_comments' %})
+    
+    """
+    try:
+        post = get_object_or_404(Post, id=pk)
+        comments = post.comment_post.all().select_related('author')
+
+        comments_data = [
+            {
+                'id': c.id,
+                'author': getattr(c.author, 'username', None),
+                'content': c.content,
+                'created_at': c.created_at.isoformat() if c.created_at else None,
+            }
+            for c in comments
+        ]
+
+        return JsonResponse({'status': 'successful', 'data': {'comments': comments_data}})
+    except Exception:
+        return JsonResponse({'status': 'failed', 'data': None}, status=400)
 
 @login_required
 def execute_post(request):
