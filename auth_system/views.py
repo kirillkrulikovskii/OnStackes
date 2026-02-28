@@ -13,19 +13,14 @@ from . import forms  as auth_forms
 @login_not_required
 def register_login(request):
     if request.method == 'POST':
-        if 'login' in request.POST: # Check if the login form is submitted
+        if 'login' in request.POST: 
             login_form = auth_forms.LoginForm(request.POST)
             register_form = auth_forms.RegisterForm()
-            print('Login form submitted')
-            if login_form.is_valid(): # invalid why? i check if the user exists and if the password is correct in the clean method of the form. but it is still invalid. maybe because of the email field? but i removed it. maybe because of the username field? but i kept it. maybe because of the password field? but i kept it. maybe because of the form itself? but i don't know why. maybe because of the csrf token? but i have it in the template. maybe because of the action url? but i have it in the template. maybe because of something else? but i don't know what else could be wrong.
+            if login_form.is_valid(): 
                 username = login_form.cleaned_data['username']
                 password = login_form.cleaned_data['password']
                 email = '@' in str(username) and username or None # Check if the input is an email or a username
                 user = auth_models.Accounts.objects.get(username=username) if not email else auth_models.Accounts.objects.get(email=email)
-                print('User found:', user)
-                print('Username  :', username)
-                print('email     :', email)
-                print('Password  :', password)
                 if user.check_password(password):
                     from django.contrib.auth import login
                     login(request, user)
@@ -52,14 +47,15 @@ def register_login(request):
         'register_form': register_form
     })
 
-# register_login.html was problem because action could not open the view.
-
-def profile_view(request, pk): # User's id is passed as pk
+def profile_view(request, pk): 
     forms = auth_forms.ProfileEditedForm()
     if request.user.id == pk and request.method == 'POST': # User is editing their own profile not others' profile
         forms = auth_forms.ProfileEditedForm(request.POST, request.FILES, instance=request.user)
         if forms.is_valid():
             forms.save()
             return redirect('auth_system:profile', pk=pk)
-    user = get_object_or_404(auth_models.Accounts, pk=pk)
-    return render(request, 'auth_system/profile.html', {'pk': pk, 'user': user, 'form': forms})
+    user = get_object_or_404(auth_models.Accounts, id=pk)
+    return render(request, 'auth/profile.html', {'user': user}) 
+
+
+

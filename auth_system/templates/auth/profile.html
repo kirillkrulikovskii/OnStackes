@@ -2,13 +2,23 @@
 
 {% block title %} {% endblock %}
 {% block head %}
+<style>
 
+</style>
 {% endblock %}
 {% block content %}
 
     <h1>Profile Page</h1>
-    {{ pk }}
-    {{ user }}
-    <!-- check when run this html -->
+    <div>
+        {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="{{ user.username }}'s avatar" width="160px">
+        {% endif %}
+        <h1>{{user.username}}</h1>
+        <h2>{{user.email}}</h2>
+        <p>{{user.bio}}</p>
+        <p>Joined date: {{user.last_login}}</p>
+    </div>
 
-{% endblock %}
+    {% include 'components/loading.html' %}
+
+{% endblock %} 

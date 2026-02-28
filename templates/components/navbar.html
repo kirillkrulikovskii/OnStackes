@@ -1,5 +1,6 @@
 {% load static %}
 <nav id="navbar">
+    <a>OnStackes</a>
     <a>Home</a>
     <a>Post</a>
     <a>Admin</a>
@@ -12,3 +13,40 @@
         <a href="{% url 'auth_system:register_login' %}">Login/Register</a>
     {% endif %}
 </nav>
+<style>
+#navbar {
+    position: sticky;
+    left    : 0;
+    top     : 0;
+    z-index   : 1000;
+    background: white;
+    width : 100%;
+    height: 3em;
+    box-shadow   : 0 0px 15px rgba(0,0,0,0.2);
+    margin-bottom: 1em;
+    transition   : box-shadow 0.3s ease;
+}
+
+#navbar.no-shadow {
+    box-shadow: none;
+}
+
+</style>
+<script>
+const navbar = document.getElementById('navbar');
+
+function handleScroll() {
+    if (!navbar) {
+        console.log('Missing!')
+        return;
+    } // prevent error if navbar is missing
+    if (window.scrollY === 0) {
+        navbar.classList.add('no-shadow');
+    } else {
+        navbar.classList.remove('no-shadow');
+    }
+}
+
+handleScroll();
+window.addEventListener('scroll', handleScroll);
+</script>
