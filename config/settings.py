@@ -29,7 +29,10 @@ SECRET_KEY = 'django-insecure-twd1%a54^3gh5itz20ud$eu0s&&xjsitahn2=382^y=_)*wlzo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    '*', '127.0.0.1', 'localhost', # Development
+    'OnStack.com', 'www.OnStack.com', 'onstack.com' # My domain
+]
 
 
 # Application definition
@@ -106,6 +109,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Email settings for password reset functionality
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587  # (not 21310)
+# EMAIL_HOST_USER = 'your-email@gmail.com'
+# EMAIL_HOST_PASSWORD = 'your-app-password'  # NOT your real Gmail password
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'kirillkrulikovskii@gmail.com'
+
+# python -m smtpd -n -c DebuggingServer localhost:21310
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
