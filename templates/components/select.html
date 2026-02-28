@@ -1,0 +1,20 @@
+<html>
+<head>
+<script type="text/javascript">
+  function changeFunc(selectElement) {
+    var selectedValue = selectElement.options[selectElement.selectedIndex].value;
+    alert("The selected value is: " + selectedValue);
+    // You can add more logic here based on the selected value
+  }
+</script>
+</head>
+<body>
+
+<select id="selectBox" onchange="changeFunc(this);">
+  <option value="1">Option #1</option>
+  <option value="2">Option #2</option>
+  <option value="3">Option #3</option>
+</select>
+
+</body>
+</html>
