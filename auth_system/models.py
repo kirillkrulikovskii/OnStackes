@@ -47,8 +47,16 @@ class Accounts(AbstractUser): # Custom accounts
                 return timezone.now() < self.timeout
         return False
 
-    def is_active(self):
-        return super().is_active
+    def is_active_with_timeout(self):
+        """Return False when account is in timeout, otherwise return the
+        underlying `is_active` field value.
+        Use this helper where you need timeout-aware active checks instead of
+        overriding the built-in `is_active` attribute (which Django expects
+        to be a BooleanField).
+        """
+        if self.is_timeout():
+            return False
+        return self.is_active
     
     def followers(self):
         return self.connection.all() # type: ignore
@@ -69,20 +77,20 @@ class Accounts(AbstractUser): # Custom accounts
             return (today.month, today.day) == (self.date_birth.month, self.date_birth.day)
         return False
 
-class Devices(models.Model):
-    user = models.ForeignKey(Accounts, related_name='devices', on_delete=models.CASCADE)
-    device_name = models.CharField(max_length=100)
-    last_used = models.DateTimeField(auto_now=True)
+# class Devices(models.Model):
+#     user = models.ForeignKey(Accounts, related_name='devices', on_delete=models.CASCADE)
+#     device_name = models.CharField(max_length=100)
+#     last_used = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f"{self.device_name} ({self.user.username})"
-    def access_denied(self):
-        self.user.timeout = timezone.now() + timezone.timedelta(minutes=15) # 15 minutes timeout
-        self.user.save()
-    def access_granted(self): # Remove timeout when access is granted. # When account's owner login with new device, access is denied until account's owner access_granted.
-        self.user.timeout = None
-        self.user.save()
-    # if account used Devices when Login is hacked/new devices.
+#     def __str__(self):
+#         return f"{self.device_name} ({self.user.username})"
+#     def access_denied(self):
+#         self.user.timeout = timezone.now() + timezone.timedelta(minutes=15) # 15 minutes timeout
+#         self.user.save()
+#     def access_granted(self): # Remove timeout when access is granted. # When account's owner login with new device, access is denied until account's owner access_granted.
+#         self.user.timeout = None
+#         self.user.save()
+#     # if account used Devices when Login is hacked/new devices.
 
 class MessageTo(models.Model):
     sender    = models.ForeignKey(Accounts, related_name='sent_messages'    , on_delete=models.CASCADE) # From
@@ -97,6 +105,10 @@ class MessageTo(models.Model):
             raise ValidationError("You are in timeout. You cannot send message.")
         if self.receiver.is_timeout():
             raise ValidationError("The receiver is in timeout. You cannot send message to the receiver.")
+        if not self.sender.is_active_with_timeout(): 
+            raise ValidationError("You are Deactivated")
+        if not self.receiver.is_active_with_timeout():
+            raise ValidationError("The receiver is Deactivated")
 
     def __str__(self):
         return f"Message from {self.sender.username} to {self.receiver.username} at {self.timestamp}"
