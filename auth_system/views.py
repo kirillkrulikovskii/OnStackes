@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views.generic import View, FormView, ListView, TemplateView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, login_not_required, user_passes_test # type: ignore
+from django.contrib.auth import login, logout
 from typing import Any
-
 
 from . import models as auth_models
 from . import forms  as auth_forms
@@ -22,7 +23,6 @@ def register_login(request):
                 email = '@' in str(username) and username or None # Check if the input is an email or a username
                 user = auth_models.Accounts.objects.get(username=username) if not email else auth_models.Accounts.objects.get(email=email)
                 if user.check_password(password):
-                    from django.contrib.auth import login
                     login(request, user)
                     print('Succefully logged in!')
                     return redirect('home')
@@ -34,7 +34,6 @@ def register_login(request):
                 email = register_form.cleaned_data['email']
                 password = register_form.cleaned_data['password']
                 user = auth_models.Accounts.objects.create_user(username=username, email=email, password=password)
-                from django.contrib.auth import login
                 login(request, user)
                 print('Succefully registered and logged in!')
                 return redirect('home')
@@ -46,6 +45,11 @@ def register_login(request):
         'login_form': login_form,
         'register_form': register_form
     })
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return JsonResponse({'message': 'Successfully logged out!'})
 
 def profile_view(request, pk): 
     forms = auth_forms.ProfileEditedForm()

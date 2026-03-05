@@ -7,5 +7,6 @@ app_name = 'auth_system'
 
 urlpatterns = [
     path('register-login/', register_login, name='register_login'),
+    path('logout/', logout_view, name='logout'),
     path('profile/<int:pk>/', profile_view, name='profile'),
 ]

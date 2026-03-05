@@ -1,0 +1,53 @@
+body, html {
+    font-family: monospace;
+    font-size: 24px;
+    color: white;
+}
+
+.container-html {
+    height: 100dvh;
+    display: grid;
+    grid-template-areas: 
+        "header header header header header"
+        "side   main   main   main   aside "
+        "side   main   main   main   aside "
+        "side   main   main   main   aside "
+        "footer footer footer footer footer"
+    ;
+}
+
+header {
+    grid-area: header;
+    margin: 10px;
+    padding: 10px;
+    background-color: blue;
+}
+
+main {
+    grid-area: main;
+    margin: 10px;
+    padding: 10px;
+    background: red;
+}
+
+side {
+    grid-area: side;
+    background: cyan;
+    color: black;
+    margin: 10px; padding: 10px;
+}
+
+aside {
+    grid-area: aside;
+    background: greenyellow;
+    color: black;
+    margin: 10px; padding: 10px;
+}
+
+footer {
+    grid-area: footer;
+    margin: 10px;
+    padding: 10px;
+    background: yellow;
+    color: black;
+}
