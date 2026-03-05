@@ -22,6 +22,25 @@ from django.conf.urls.static import static
 
 from blog import views as blog_views
 
+
+from django.shortcuts import render
+import time
+
+# Testing page ===================================================================
+if settings.DEBUG:
+    def testingHTML(request):
+        # This renders immediately
+        return render(request, 'testing.html')
+
+    def testexecute(request):
+        # This runs in the background while the user sees 'testing.html'
+        print("Executed progress")
+        time.sleep(10) 
+        print("Finished")
+        return render(request, 'components/loading.html')
+# ================================================================================
+
+
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', blog_views.HomeView.as_view(), name='home'),
@@ -30,4 +49,9 @@ urlpatterns = [
     path('auth_system/', include('auth_system.urls', namespace='auth_system')),
 ]
 
-if settings.DEBUG: urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG: 
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [
+        path('test/', testingHTML, name='test'),
+        path('pass/', testexecute, name='pass'),
+    ]

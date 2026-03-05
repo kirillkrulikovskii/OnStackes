@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Main Page Loaded</h1>
+
+    <!-- Placeholder where the component will appear -->
+    <div id="slow-component">
+        <p>Loading slow component (waiting 10 seconds)...</p>
+    </div>
+
+    <script>
+        // Use an IIFE or simple function to trigger on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log("Starting 10-second fetch...");
+
+            fetch("{% url 'pass' %}")
+                .then(response => response.text()) // Convert the Django render to text
+                .then(html => {
+                    // Inject the rendered HTML into the page
+                    document.getElementById('slow-component').innerHTML = html;
+                    console.log("Component loaded!");
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
