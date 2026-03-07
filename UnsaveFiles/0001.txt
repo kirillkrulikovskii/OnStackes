@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Detail {% endblock %}
+{% block head %}
+<script defer>
+document.addEventListener('DOMContentLoaded', function() {
+    const button = document.getElementById("comment-button");
+    if (!button) return;
+
+    button.addEventListener('click', function() {
+        fetch("{% url 'blog:fetch_comments' post.pk %}") // http://127.0.0.1:8000/blog/fetch_comments
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                const comments = (data.data && data.data.comments) || [];
+                const html = comments.length
+                    ? comments.map(c => `<div><strong>${c.author}</strong><p>${c.content}</p></div>`).join('')
+                    : 'No comments';
+                document.getElementById('demo').innerHTML = html;
+            })
+            .catch(() => {
+                document.getElementById('demo').innerText = 'Failed to load comments';
+            });
+    });
+});
+</script>
+{% endblock %}
+{% block content %}
+<h1>{{post.title}}</h1>
+<h6>{{post.author}}</h6>
+<p>{{post.content}}</p>
+<p>{{post.created_at}}</p>
+<hr>
+<h3 id="demo">Demo is still running</h3>
+<button id="comment-button">Click me to result</button>
+<hr>
+{% for comment in post.comment_post.all %}
+    <h3>{{comment.author}}</h3>
+    <p>{{comment.content}}</p>
+{% empty %}
+    <p>No Comment yet.</p>
+{% endfor %}
+{% endblock %}

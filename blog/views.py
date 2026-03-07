@@ -1,10 +1,12 @@
+from typing import Any
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from .forms import PostForm
-from .models import Post
+from .models import Post, Issue, Suggest
 
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 
 class HomeView(TemplateView):
@@ -14,15 +16,59 @@ class HomeView(TemplateView):
         context['data'] = "Hello, there!"
         return context
 
-class PostListView(ListView):
-    model = Post
-    template_name = "post_list.html"
-    context_object_name = 'posts'
+class PostView(TemplateView):
+    template_name = "blog/post.html"
 
-class PostDetailView(DetailView):
-    model = Post
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        return context
+    
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().get(request, *args, **kwargs)
+    
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().get(request, *args, **kwargs)
+
+class PostListView(ListView):
     template_name = "blog/detail_post.html"
+    model = Post
     context_object_name = "post"
+
+    
+
+# class PostListView(ListView):
+#     model = Post
+#     template_name = "post_list.html"
+#     context_object_name = 'posts'
+
+# class PostDetailView(DetailView):
+#     model = Post
+#     template_name = "blog/detail_post.html"
+#     context_object_name = "post"
+
+# class PostCreateView(CreateView):
+#     pass
+
+"""
+TimeplateView mixing CRUD (CREATE, READ, UPDATE, DELETE) with 
+i'm planning TemplateView make Form or Javascript like CRSF_TOKEN.
+
+
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def fetch_comments(request, pk):
     """
