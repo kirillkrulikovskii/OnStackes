@@ -1,27 +1,20 @@
 <!DOCTYPE html>
-<html>
-<body>
-    <h1>Main Page Loaded</h1>
-
-    <!-- Placeholder where the component will appear -->
-    <div id="slow-component">
-        <p>Loading slow component (waiting 10 seconds)...</p>
-    </div>
-
-    <script>
-        // Use an IIFE or simple function to trigger on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            console.log("Starting 10-second fetch...");
-
-            fetch("{% url 'pass' %}")
-                .then(response => response.text()) // Convert the Django render to text
-                .then(html => {
-                    // Inject the rendered HTML into the page
-                    document.getElementById('slow-component').innerHTML = html;
-                    console.log("Component loaded!");
-                })
-                .catch(error => console.error('Error:', error));
-        });
-    </script>
-</body>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Profile</title>
+        <link rel="stylesheet" href="testing.css">
+    </head>
+    <body>
+        <div class="profile-container">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAmQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAgMBBQYHBP/EADQQAAIBAwEFBQYFBQAAAAAAAAABAgMEEQUGEiExURNBQmGRFDJScYGxIiVTofAWI2KS0f/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD1kAAADKAwZQwZXADBnGFl8uprNX1mlp+acEqlfHu54R+ZzV3qt7d8KteSh8MPwoDrq+pWVvwq3EE+ieWfI9oNPXjn/ocfxAHb0NXsKzxGuovpJYPuWHFNNNPl5nnXLgjY6Xq9awnx3qtF86bf7oDs8Bmv0/Wba/qdlBSp1O5T7/kbFr17wIgyYAAAAAAAAAyZwYJJAEiq+rq1s6teXgWV8+4+hI0+1jcdKSXiqJMDkalSdWrOpUeZzeWyAfNgAAAAAAnRqyo1qdWDxKDyj0OMlUhGpHlNZPOXyeOh6Dpkfy21z+lH7AWtEWWNEWgImDJgAAABkGUBlImkYSJxQGYo0218PypS7lUWTexRr9o6Maui3O94UpL6MDz8BefMAAAAAAA9Isqe5Y28elOP2POFzWep6bQ3ZW1Fw4xcFj0Ag0Qki9oqkgKmjBNkGBgAwBIkiKJoCSRbFEIlsUBJI0e2dWdPTKcI+5UqYn8sZN+kaTbKlv6Qp49yon68AOFec4fNAAAAAAAAfTKO72SuJXGk7s3l0puOfI4Vc0dvsbS3NI3se/UePMDcyRW0XyKmgKJIiyyRBgQAYAyiaIIsQFkS2PIqiWxAsRTqFpG+sqttPlUjjPR9xeiSA8x1DTLvTpL2qluKTxGS5S/mD5DuNuIt6VTmvDWX7pnDgAAAAAH16dp1zqNbs7anvY4yk+UfmeiWFpGys6VtDiqccZNbsbTVPRoyS41Jyb9TeMCuRVIuZXICmRVItkVsCtmCTMAZRYitFkQLYlsSqJbECxciSIrkTQGt2isp3+lVqFJJ1OEorq08nnE4yhJwmsSi8NdGek65qK0ywnXwpT5Qi+9nnd5cSu7mpXnGMZTeWorCApAAAst6NS5rQo0Y5qTe7FeZWfVp17U0+7jc0YxlOKaSly4geiaTZ+wWNC2zlwj+J9WfWzW7P6qtVs+1aUasJbs4ruZsmBBlcu8skVy7wKpFUi2RVICDMGWYAyixFaJxAuiWRKYyxxfBLvNfe7Q2NnmO921ReGnxXqBu16lNe8t7bPb1qdNecuPocRf7TX125RpNW9J+GHP1NNOUpy3pycm+bk85A2+0mrLU7yPYt+z0uEP8urNOAAAAAAAbPZ/U3pd8qkn/AGZrdqL7M723v7W7WbevTn5KXFfQ8vMpuOHFuLXJx4MD1VlcjhbHaPULRKE5+0U14anNfJnQ2W0VldYjOXYVH4Z8vowNnJlbJOSlHMcNdSDAiyJlmAK69zRtYOpcVI04rqai72mpRzGzouo/inwT+nM527uat3WlVrSzJvKWeEUUgfbe6peXue2rPd+CPBI+IAAAAAAAAAAAAAAAAAD67PUbuzknQryS+CXGPobu12mjJpXlDdz46f8Aw5kAd9bXVC6hv0Kqmu/HNFu6+pwNtXq29aNShJxkn15m6/qqv+hADQAAAAAAAAAAAAAAAAAAAAAAAADC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAB//2Q=="
+            alt="Profile" style="grid-area: img"> <!-- Neutral person -->
+            <div style="grid-area: username">
+                <h3>John doe | @johndoe</h3>
+                <p >Joined Date: DD/MM/YY | LastLogin: HH:MM DD/MM/YY </p>
+            </div>
+            <pre style="grid-area: bio">about the bio.</pre>
+      
+        </div>
+    </body>
 </html>

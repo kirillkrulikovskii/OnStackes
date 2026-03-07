@@ -1,22 +1,32 @@
 
-#navbar a{
-    background-color: blue;
+nav[id='navbar'] {
+    font-family: monospace;
+    height: 3em;
+    padding: 0 1em;
+    background-image: linear-gradient(to top, rgb(230, 230, 230), whitesmoke);
+
+    display: flex; 
+    align-items: center; 
+}
+nav[id='navbar'] > a {
+    text-decoration: none;
+    border: 1px solid rgb(255,255,255);
+    border-bottom: none;
+    border-top: none;
+    color: black;
+    padding: 0.5em 1em;
+    border-radius: 0;
+    background-color: none;
+    transition: background-color 0.2s ease, transform 0.2s ease, z-index 0.2s ease;
+    transform: scale(1);
+    z-index: 1001;
+}
+nav[id='navbar'] > a:hover {
+    background-color: whitesmoke;
+    transform: scale(1.1);
+    z-index: 1011;
 }
 
-#navbar {
-    position: sticky;
-    left    : 0;
-    top     : 0;
-    z-index   : 1000;
-    background: whitesmoke;
-    width : 100%;
-    min-height: 3em;
-    box-shadow   : 0 0px 15px rgba(0,0,0,0.2);
-    margin-bottom: 1em;
-    transition   : box-shadow 0.1s ease;
-    padding: 1em;
-}
-
-#navbar.no-shadow {
-    box-shadow: none;
+nav[id='navbar']>a:nth-child(6) {
+    margin-left: auto;
 }

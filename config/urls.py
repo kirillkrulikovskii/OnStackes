@@ -30,7 +30,7 @@ import time
 if settings.DEBUG:
     def testingHTML(request):
         # This renders immediately
-        return render(request, 'testing.html')
+        return render(request, 'index.html')
 
     def testexecute(request):
         # This runs in the background while the user sees 'testing.html'

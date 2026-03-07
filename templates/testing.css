@@ -1,0 +1,47 @@
+.profile-container {
+    display: grid;
+    margin: auto;
+    margin-top: 8em;
+    max-width: 40rem;        /* limit how wide it can grow */
+    grid-template-columns: 8em 1fr; /* photo fixed, text takes remaining */
+    grid-template-areas:
+        "img username"
+        "bio bio";
+    gap: 1em;
+}
+
+.profile-container > img {
+    border-radius: 2em 0em 0em 2em;
+    width: 8em;
+    height: 8em;
+    max-width: 100%;          /* never overflow container */
+    height: auto;            /* preserve aspect ratio */
+    object-fit: cover;       /* fill the box gracefully */
+}
+
+.profile-container > div[style="grid-area: username"] {
+    max-width: 30rem;        /* or whatever suits your design */
+    background: whitesmoke;
+    padding: 1em;
+    border-radius: 0em 2em 2em 0em;
+}
+
+.profile-container > pre {
+    background: whitesmoke;
+    height: 12em;
+    padding: 2em;
+    border-radius: 2em;
+}
+
+/* adjust layout on narrow viewports */
+@media (max-width: 30rem) {
+    .profile-container {
+        grid-template-columns: 6em 1fr;
+        max-width: 90%;
+    }
+
+    .profile-container > img {
+        width: 6em;
+        height: 6em;
+    }
+}
